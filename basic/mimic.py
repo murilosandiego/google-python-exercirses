@@ -47,6 +47,21 @@ import sys
 
 def mimic_dict(filename):
   """Returns mimic dict mapping each word to list of words which follow it."""
+  with open(filename) as f:
+      words = f.read().split()
+
+  print(words)
+
+  dict_mimic = {}
+
+  for i in range(len(words)):
+      if not words[i] in dict_mimic.keys():
+          dict_mimic[words[i]] = []
+      if i < len(words) -1:
+          dict_mimic[words[i]].append(words[i + 1])
+          print(i, len(words) - 1)
+          print(dict_mimic)
+
   return
 
 

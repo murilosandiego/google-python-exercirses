@@ -38,6 +38,7 @@ print_words() and print_top().
 """
 
 import sys
+import string
 
 
 # +++your code here+++
@@ -50,6 +51,50 @@ import sys
 
 # This basic command line argument parsing code is provided and
 # calls the print_words() and print_top() functions which you must define.
+def read_file(filename):
+
+    with open(filename) as f:
+        words = f.read();
+
+    for c in string.punctuation:
+        words = words.replace(c,' ')
+
+    words = words.lower()
+    words = words.split()
+
+    dict = {}
+    for key in words:
+        if not key in dict.keys():
+            dict[key] = 1
+        else:
+            dict[key] += 1
+    return dict
+
+
+def print_words(filename):
+    count = read_file(filename)
+
+    keys = list(count.keys())
+    keys.sort()
+
+    for item in keys:
+        print('%s %s' % (item, count[item]))
+
+def print_top(filename):
+    count = read_file(filename)
+
+    dict_invertido = {}
+    for item in count:
+        dict_invertido[count[item]] = item
+    # organizes the output
+    keys = list(dict_invertido.keys())
+    keys.sort()
+    keys.reverse()
+
+    # prints the output
+    for item in keys:
+        print('%s %s' % (dict_invertido[item],item))
+
 def main():
     if len(sys.argv) != 3:
         print('usage: ./wordcount.py {--count | --topcount} file')
